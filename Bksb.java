@@ -122,4 +122,29 @@ public class Bksb {
 		}
 	}
 	
+	// Quickly scale down a .bksb's UV maps to make room in its texture file for other stuff,
+	// without needing to create a new file
+	private void scaleUV(float scale) throws IOException {
+		LERandomAccessFile f = new LERandomAccessFile(file, "rw");
+		f.skipBytes(9 + numFrames * 16 + (hasLightmap ? 66 : 47));
+		for (BksbFrame frame : frames) {
+			for (Vertex vertex : frame.getVertices()) {
+				f.skipBytes(12);
+				f.writeFloat(vertex.getU()*scale);
+				f.writeFloat(1-vertex.getV()*scale);
+				if (hasLightmap) {
+					f.writeFloat(vertex.getU_lm()*scale);
+					f.writeFloat(1-vertex.getV_lm()*scale);
+				}
+				else {
+					f.skipBytes(8);
+				}
+			}
+		}
+		f.close();
+	}
+	public void scaleUV(double scale) throws IOException {
+		scaleUV((float)scale);
+	}
+	
 }
