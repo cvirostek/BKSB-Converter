@@ -178,7 +178,7 @@ public class ObjFrame {
 	// of the texture being inserted, texturePosition is the position of this texture from the bottom left
 	// corner to the bottom left corner of the larger texture, and imageSize is the dimensions of the 
 	// larger texture.
-	public void adjustUVs(int[] textureSize, int[] texturePosition, int[] imageSize) {
+	public void transformUV(int[] textureSize, int[] texturePosition, int[] imageSize) {
 		float[] pixelsIntoImage = new float[2];
 		float u, v;
 		Vertex tmpVertex;

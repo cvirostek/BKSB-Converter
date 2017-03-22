@@ -34,6 +34,10 @@ public class BksbFrame {
 		faceIndex++;
 	}
 	
+	public Vertex[] getVertices() {
+		return vertices;
+	}
+	
 	public void generateObj(String filename, boolean includeLightmap) throws IOException {
 		Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(filename+".obj"))));
 		for (Vertex vertex : vertices) {

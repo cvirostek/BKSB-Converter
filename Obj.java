@@ -25,9 +25,9 @@ public class Obj {
 		frames[0] = new ObjFrame(file);
 	}
 	
-	public void adjustUVs(int[] textureSize, int[] texturePosition, int[] imageSize) {
+	public void transformUV(int[] textureSize, int[] texturePosition, int[] imageSize) {
 		for (ObjFrame frame : frames) {
-			frame.adjustUVs(textureSize, texturePosition, imageSize);
+			frame.transformUV(textureSize, texturePosition, imageSize);
 		}
 	}
 	
