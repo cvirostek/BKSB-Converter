@@ -9,6 +9,7 @@ public class UI {
 	private File[] obj_files;
 	private File[] lm_files;
 	private File[] bksb_files;
+	private File[] bksb_uv_files;
 	
 	public UI() {
 		
@@ -168,6 +169,54 @@ public class UI {
 					    }
 					}
 				}
+			}
+		});
+		
+		JPanel transformUVPanel = new JPanel();
+		JButton selectBksbButton2 = new JButton("Select .bksb");
+		JButton transformUVButton = new JButton("Scale UVs");
+		transformUVButton.setEnabled(false);
+		JFormattedTextField scaleUVField = new JFormattedTextField("0.5");
+		transformUVPanel.add(selectBksbButton2);
+		transformUVPanel.add(transformUVButton);
+		transformUVPanel.add(scaleUVField);
+		tabs.addTab("Scale .bksb UVs", transformUVPanel);
+		
+		selectBksbButton2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fileChooser = new JFileChooser();
+				fileChooser.setMultiSelectionEnabled(true);
+				FileFilter filter = new FileNameExtensionFilter("BKSB files", "bksb");
+				fileChooser.setFileFilter(filter);
+				try {
+					fileChooser.setCurrentDirectory(new File(".").getCanonicalFile());
+				}
+				catch (Exception ex) {
+					System.out.println("Error selecting bksb file.");
+				}
+				int result = fileChooser.showOpenDialog(fileChooser);
+				if (result == JFileChooser.APPROVE_OPTION) {
+				    bksb_uv_files = fileChooser.getSelectedFiles();
+				    for (File file : bksb_uv_files) {
+				    	System.out.println("Selected file: " + file.getPath());
+				    }
+				    transformUVButton.setEnabled(true);
+				}
+			}
+		});
+		
+		transformUVButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				for (File file : bksb_uv_files) {
+					try {
+						Bksb bksb = new Bksb(file);
+						bksb.scaleUV(0.5);
+					}
+					catch (Exception ex) {
+						System.out.println("Error scaling .bksb UVs.");
+					}
+				}
+				
 			}
 		});
 		
